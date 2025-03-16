@@ -1,18 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const inputNombre = document.getElementById("nombre-amigo");
-    const listaAmigos = document.getElementById("lista-amigos");
-    const botonAgregar = document.getElementById("boton-adicionar");
-    const botonSortear = document.getElementById("boton-sortear");
-    const resultadoSorteo = document.getElementById("resultado-sorteo");
+    const inputNombre = document.getElementById("amigo");  // Corregido
+    const listaAmigos = document.getElementById("listaAmigos");  // Corregido
+    const botonAgregar = document.querySelector(".button-add");  // Corregido
+    const botonSortear = document.querySelector(".button-draw");  // Corregido
+    const resultadoSorteo = document.getElementById("resultado");  // Corregido
 
     let amigos = []; // Lista de nombres
 
-    // Agregar amigo
-    botonAgregar.addEventListener("click", () => {
+    // Función para agregar amigo
+    function agregarAmigo() {
         const nombre = inputNombre.value.trim();
 
         if (nombre === "") {
             alert("Por favor, ingresa un nombre válido.");
+            return;
+        }
+
+        if (amigos.includes(nombre)) {
+            alert("Este nombre ya ha sido agregado.");
             return;
         }
 
@@ -26,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Limpiar el campo de entrada
         inputNombre.value = "";
-    });
+    }
 
-    // Sortear amigo
-    botonSortear.addEventListener("click", () => {
+    // Función para sortear amigo
+    function sortearAmigo() {
         if (amigos.length === 0) {
             alert("Agrega al menos un amigo antes de sortear.");
             return;
@@ -38,5 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
         // Elegir un nombre aleatorio
         const indiceAleatorio = Math.floor(Math.random() * amigos.length);
         resultadoSorteo.textContent = `🎉 El amigo secreto es: ${amigos[indiceAleatorio]} 🎉`;
-    });
+    }
+
+    // Agregar eventos a los botones
+    botonAgregar.addEventListener("click", agregarAmigo);
+    botonSortear.addEventListener("click", sortearAmigo);
 });
