@@ -8,11 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let amigos = []; // Usamos un array para mantener el formato original
     let nombresNormalizados = new Set(); // Set para evitar duplicados ignorando mayúsculas/minúsculas
-
-    // Agregar el texto del autor
-    if (autorTexto) {
-        autorTexto.textContent = "Por Renzo Lea - Tacna, Perú";
-    }
     
     function actualizarLista() {
         listaAmigos.innerHTML = "";
