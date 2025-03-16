@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const botonReiniciar = document.querySelector(".button-reset");
     const resultadoSorteo = document.getElementById("resultado");
     
-    let amigos = new Set(); // Usamos Set para evitar duplicados
+    let amigos = []; // Usamos un array para mantener el formato original
+    let nombresNormalizados = new Set(); // Set para evitar duplicados ignorando mayúsculas/minúsculas
 
     function actualizarLista() {
         listaAmigos.innerHTML = "";
@@ -23,27 +24,32 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Por favor, ingresa un nombre válido.");
             return;
         }
-        if (amigos.has(nombre)) {
+
+        const nombreNormalizado = nombre.toLowerCase(); // Convertimos a minúsculas para comparación
+
+        if (nombresNormalizados.has(nombreNormalizado)) {
             alert("Este nombre ya ha sido agregado.");
             return;
         }
-        amigos.add(nombre);
+
+        amigos.push(nombre); // Guardamos el nombre con su formato original
+        nombresNormalizados.add(nombreNormalizado); // Guardamos la versión en minúsculas para evitar duplicados
         actualizarLista();
         inputNombre.value = "";
     }
 
     function sortearAmigo() {
-        if (amigos.size === 0) {
+        if (amigos.length === 0) {
             alert("Agrega al menos un amigo antes de sortear.");
             return;
         }
-        const listaArray = Array.from(amigos);
-        const indiceAleatorio = Math.floor(Math.random() * listaArray.length);
-        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${listaArray[indiceAleatorio]} 🎉`;
+        const indiceAleatorio = Math.floor(Math.random() * amigos.length);
+        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${amigos[indiceAleatorio]} 🎉`;
     }
 
     function reiniciarSorteo() {
-        amigos.clear();
+        amigos = [];
+        nombresNormalizados.clear();
         listaAmigos.innerHTML = "";
         resultadoSorteo.textContent = "";
     }
