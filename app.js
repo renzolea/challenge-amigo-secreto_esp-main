@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let amigos = []; // Usamos un array para mantener el formato original
     let nombresNormalizados = new Set(); // Set para evitar duplicados ignorando mayúsculas/minúsculas
-    
+
     function actualizarLista() {
         listaAmigos.innerHTML = "";
         amigos.forEach(nombre => {
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const indiceAleatorio = Math.floor(Math.random() * amigos.length);
-        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${amigos[indiceAleatorio]} 🎉`;
+        resultadoSorteo.textContent = 🎉 El amigo secreto es: ${amigos[indiceAleatorio]} 🎉;
     }
 
     function reiniciarSorteo() {
