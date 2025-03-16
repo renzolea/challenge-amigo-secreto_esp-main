@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         const indiceAleatorio = Math.floor(Math.random() * amigos.length);
-        resultadoSorteo.textContent = 🎉 El amigo secreto es: ${amigos[indiceAleatorio]} 🎉;
+        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${amigos[indiceAleatorio]} 🎉`;
     }
 
     function reiniciarSorteo() {
