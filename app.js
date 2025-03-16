@@ -3,13 +3,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const listaAmigos = document.getElementById("listaAmigos");
     const botonAgregar = document.querySelector(".button-add");
     const botonSortear = document.querySelector(".button-draw");
+    const botonReiniciar = document.querySelector(".button-reset");
     const resultadoSorteo = document.getElementById("resultado");
-
+    
     let amigos = new Set(); // Usamos Set para evitar duplicados
 
-    // Actualizar la lista en la interfaz
     function actualizarLista() {
-        listaAmigos.innerHTML = ""; // Limpiar la lista antes de actualizar
+        listaAmigos.innerHTML = "";
         amigos.forEach(nombre => {
             const li = document.createElement("li");
             li.textContent = nombre;
@@ -17,42 +17,41 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Agregar amigo a la lista
     function agregarAmigo() {
         const nombre = inputNombre.value.trim();
-
         if (!nombre) {
             alert("Por favor, ingresa un nombre válido.");
             return;
         }
-
         if (amigos.has(nombre)) {
             alert("Este nombre ya ha sido agregado.");
             return;
         }
-
-        amigos.add(nombre);  // Agregar al conjunto
-        actualizarLista();  // Refrescar la lista visual
-        inputNombre.value = ""; // Limpiar el input
+        amigos.add(nombre);
+        actualizarLista();
+        inputNombre.value = "";
     }
 
-    // Sortear un amigo
     function sortearAmigo() {
         if (amigos.size === 0) {
             alert("Agrega al menos un amigo antes de sortear.");
             return;
         }
-
-        const nombresArray = Array.from(amigos);
-        const indiceAleatorio = Math.floor(Math.random() * nombresArray.length);
-        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${nombresArray[indiceAleatorio]} 🎉`;
+        const listaArray = Array.from(amigos);
+        const indiceAleatorio = Math.floor(Math.random() * listaArray.length);
+        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${listaArray[indiceAleatorio]} 🎉`;
     }
 
-    // Eventos de botones
+    function reiniciarSorteo() {
+        amigos.clear();
+        listaAmigos.innerHTML = "";
+        resultadoSorteo.textContent = "";
+    }
+
     botonAgregar.addEventListener("click", agregarAmigo);
     botonSortear.addEventListener("click", sortearAmigo);
+    botonReiniciar.addEventListener("click", reiniciarSorteo);
 
-    // Permitir agregar con la tecla "Enter"
     inputNombre.addEventListener("keypress", (event) => {
         if (event.key === "Enter") {
             agregarAmigo();
