@@ -1,51 +1,61 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const inputNombre = document.getElementById("amigo");  // Corregido
-    const listaAmigos = document.getElementById("listaAmigos");  // Corregido
-    const botonAgregar = document.querySelector(".button-add");  // Corregido
-    const botonSortear = document.querySelector(".button-draw");  // Corregido
-    const resultadoSorteo = document.getElementById("resultado");  // Corregido
+    const inputNombre = document.getElementById("amigo");
+    const listaAmigos = document.getElementById("listaAmigos");
+    const botonAgregar = document.querySelector(".button-add");
+    const botonSortear = document.querySelector(".button-draw");
+    const resultadoSorteo = document.getElementById("resultado");
 
-    let amigos = []; // Lista de nombres
+    let amigos = new Set(); // Usamos Set para evitar duplicados
 
-    // Función para agregar amigo
+    // Actualizar la lista en la interfaz
+    function actualizarLista() {
+        listaAmigos.innerHTML = ""; // Limpiar la lista antes de actualizar
+        amigos.forEach(nombre => {
+            const li = document.createElement("li");
+            li.textContent = nombre;
+            listaAmigos.appendChild(li);
+        });
+    }
+
+    // Agregar amigo a la lista
     function agregarAmigo() {
         const nombre = inputNombre.value.trim();
 
-        if (nombre === "") {
+        if (!nombre) {
             alert("Por favor, ingresa un nombre válido.");
             return;
         }
 
-        if (amigos.includes(nombre)) {
+        if (amigos.has(nombre)) {
             alert("Este nombre ya ha sido agregado.");
             return;
         }
 
-        // Agregar nombre a la lista
-        amigos.push(nombre);
-
-        // Mostrar en la lista de la página
-        const li = document.createElement("li");
-        li.textContent = nombre;
-        listaAmigos.appendChild(li);
-
-        // Limpiar el campo de entrada
-        inputNombre.value = "";
+        amigos.add(nombre);  // Agregar al conjunto
+        actualizarLista();  // Refrescar la lista visual
+        inputNombre.value = ""; // Limpiar el input
     }
 
-    // Función para sortear amigo
+    // Sortear un amigo
     function sortearAmigo() {
-        if (amigos.length === 0) {
+        if (amigos.size === 0) {
             alert("Agrega al menos un amigo antes de sortear.");
             return;
         }
 
-        // Elegir un nombre aleatorio
-        const indiceAleatorio = Math.floor(Math.random() * amigos.length);
-        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${amigos[indiceAleatorio]} 🎉`;
+        const nombresArray = Array.from(amigos);
+        const indiceAleatorio = Math.floor(Math.random() * nombresArray.length);
+        resultadoSorteo.textContent = `🎉 El amigo secreto es: ${nombresArray[indiceAleatorio]} 🎉`;
     }
 
-    // Agregar eventos a los botones
+    // Eventos de botones
     botonAgregar.addEventListener("click", agregarAmigo);
     botonSortear.addEventListener("click", sortearAmigo);
+
+    // Permitir agregar con la tecla "Enter"
+    inputNombre.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            agregarAmigo();
+        }
+    });
 });
